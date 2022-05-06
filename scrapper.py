@@ -1,6 +1,3 @@
-!pip install kora -q
-from kora.selenium import wd
-
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -18,6 +15,10 @@ def get_driver():
   return driver
 driver=get_driver()
 
+flip_url = 'https://www.flips.finance/'
+
+# Function to get ALL NFT titles on the page
+
 def get_nft_title():
   nft_div_tag='Rankings_tableRowLink__2wVPO'
   driver.get(flip_url)
@@ -28,6 +29,8 @@ def get_nft_title():
     nft_title.append(i.text)
   return nft_title
 
+# Function to get ALL NFT volumes on the page
+
 def get_nft_vol():
   ranks=driver.find_elements(By.XPATH, '//tr[@class="Rankings_rankTableRow__1SwSX"]/td[4]')
   nft_vol=[]
@@ -35,6 +38,9 @@ def get_nft_vol():
     #print(i.text)
     nft_vol.append(i.text)
   return nft_vol
+
+
+# Function to get ALL NFT sales on the page
 
 def get_nft_sales():
   sale=driver.find_elements(By.XPATH, '//tr[@class="Rankings_rankTableRow__1SwSX"]/td[5]')
@@ -44,6 +50,8 @@ def get_nft_sales():
     nft_sale.append(i.text)
   return nft_sale
 
+# Function to get ALL NFT Floor Price on the page
+
 def nft_floor_price():
   fl_price=driver.find_elements(By.XPATH, '//tr[@class="Rankings_rankTableRow__1SwSX"]/td[6]')
   nft_fl_price=[]
@@ -51,6 +59,9 @@ def nft_floor_price():
     #print(i.text)
     nft_fl_price.append(i.text)
   return nft_fl_price
+
+
+# Function to get ALL NFT % change on the page
 
 def get_nft_change():
   fl_change=driver.find_elements(By.XPATH, '//tr[@class="Rankings_rankTableRow__1SwSX"]/td[7]')
@@ -60,6 +71,9 @@ def get_nft_change():
     nft_fl_change.append(i.text)
   return nft_fl_change
 
+
+# Function to get ALL NFT Owners on the page
+
 def get_nft_owners():
   owners=driver.find_elements(By.XPATH, '//tr[@class="Rankings_rankTableRow__1SwSX"]/td[8]')
   nft_owners=[]
@@ -67,6 +81,9 @@ def get_nft_owners():
     #print(i.text)
     nft_owners.append(i.text)
   return nft_owners
+
+
+# Function to get ALL % NFT Owners Chnage on the page
 
 def get_nft_owners_change():
   own_change=driver.find_elements(By.XPATH, '//tr[@class="Rankings_rankTableRow__1SwSX"]/td[9]')
@@ -76,6 +93,9 @@ def get_nft_owners_change():
     nft_own_change.append(i.text)
   return nft_own_change
 
+
+# Function to get ALL NFT Suppy Listed on the page
+
 def nft_supply_listed():
   listed_suppy=driver.find_elements(By.XPATH, '//tr[@class="Rankings_rankTableRow__1SwSX"]/td[10]')
   nft_supply_listed=[]
@@ -83,7 +103,10 @@ def nft_supply_listed():
     #print(i.text)
     nft_supply_listed.append(i.text)
   return nft_supply_listed
-  
+
+
+# Function to get ALL NFT % Listings on the page
+
 def get_nft_listings():
   listings=driver.find_elements(By.XPATH, '//tr[@class="Rankings_rankTableRow__1SwSX"]/td[11]')
   nft_listings=[]
@@ -91,6 +114,8 @@ def get_nft_listings():
     #print(i.text)
     nft_listings.append(i.text)
   return nft_listings
+
+#We are only going to scrape all the top NFTs on the page.
 
 def scrape_nft():
     nft_url = 'https://www.flips.finance/'
@@ -105,8 +130,13 @@ def scrape_nft():
         'Change Owners': get_nft_owners_change(),
         '% Supply Listed': nft_supply_listed(),
         '24 hr Listing Change': get_nft_listings(),
-        #'Image_url': get_nft_img()
+        #'Other Links' : get_other_links()
+                
     }
     return pd.DataFrame(nft_dict)
 
-scrape_nft()
+df = scrape_nft()
+
+# saving the DataFrame as a CSV file
+nft_csv_data = df.to_csv('NFT.csv', index = False)
+print('\nCSV String:\n', nft_csv_data)
