@@ -1,5 +1,4 @@
 from selenium import webdriver
-from selenium import wd # issue
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import time
@@ -146,20 +145,20 @@ print('\nCSV String:\n', nft_csv_data)
 
 # Function to get links from 2nd page for each of the NFT's. Due to time constraints using (.sleep) we shall only do 10.
 
-wd.get('https://www.flips.finance/') #issue
+driver.get('https://www.flips.finance/') #issue
 
 
 def get_other_links():
   final_list=[]
   for i in range(10):
-    wd.get('https://www.flips.finance/')
+    driver.get('https://www.flips.finance/')
     time.sleep(3)
-    y=wd.find_elements(By.CLASS_NAME,'Rankings_tableRowLink__2wVPO')
+    y=get_driver().find_elements(By.CLASS_NAME,'Rankings_tableRowLink__2wVPO')
     #print(y[i])
     x=y[i]
     x.click()
     time.sleep(5)
-    z=wd.find_elements(By.CLASS_NAME,'cstats_l__6AaiS')
+    z=get_driver().find_elements(By.CLASS_NAME,'cstats_l__6AaiS')
     #nft_links.append(z.get_attribute('href'))
     nft_links = []
     for j in z:
@@ -193,5 +192,5 @@ def scrape_nft2():
 df_2 = scrape_nft2()
 
 # saving the DataFrame as a CSV file
-nft_csv_data = df.to_csv('NFT(10).csv', index = False)
+nft_csv_data = df_2.to_csv('NFT(10).csv', index = False)
 print('\nCSV String:\n', nft_csv_data)
