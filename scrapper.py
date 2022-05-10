@@ -194,3 +194,38 @@ df_2 = scrape_nft2()
 # saving the DataFrame as a CSV file
 nft_csv_data = df_2.to_csv('NFT(10).csv', index = False)
 print('\nCSV String:\n', nft_csv_data)
+
+# send email code, somethings off with this aswell @samanvita
+
+'''
+def send_email():
+  
+  try:
+    server_ssl = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+    server_ssl.ehlo()
+
+    sender_email = 'sendtrends7@gmail.com'
+    receiver_email = 'sendtrends7@gmail.com'  
+    my_secret = os.environ['gmail_pass']
+    print('Password:', my_secret)
+    subject = 'OMG Test Message from Replit'
+    body = 'Hey, this is a test email sent via replit using python'
+    
+    email_text = f"""
+    From: {sender_email}
+    To: {receiver_email}
+    
+    Subject: {subject}
+    
+    {body}
+    """
+    server_ssl.login(sender_email, my_secret)
+    server_ssl.sendmail(sender_email, receiver_email, email_text)
+    server_ssl.close()
+    
+  except:
+    print ('Something went wrong...')
+
+send_email()
+'''
+
